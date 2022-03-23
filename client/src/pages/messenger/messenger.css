@@ -1,0 +1,178 @@
+.messenger {
+  height: calc(100vh - 70px);
+  display: flex;
+}
+
+.chatMenu {
+  flex: 0;
+}
+
+.chatMenuInput {
+  width: 90%;
+  padding: 10px 0;
+  border: none;
+  border-bottom: 1px solid gray;
+}
+
+.chatBox {
+  flex: 12;
+}
+
+.chatBoxWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+}
+
+.chatBoxTop {
+  height: 100%;
+  overflow-y: scroll;
+  padding-right: 10px;
+  margin-right: 10px;
+}
+
+.chatBoxBottom {
+  /* margin-top: 5px; */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #F8F8F8;
+}
+
+.chatMessageInput {
+  width: 100%;
+  height: 35px;
+  /* padding: 10px; */
+}
+
+.chatSubmitButton {
+  width: 80px;
+  height: 40px;
+  border: none;
+  margin: 2px;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #FA5523;
+  color: #F8F8F8;
+}
+
+.chatOnline {
+  flex: 0;
+}
+
+.chatMenuWrapper,
+.chatBoxWrapper,
+.chatOnlineWrapper {
+  padding: 10px;
+  height: 100%;
+}
+
+.noConversationText {
+  position: absolute;
+  top: 10%;
+  font-size: 50px;
+  color: rgb(224, 220, 220);
+  cursor: default;
+}
+
+@media screen and (max-width: 768px) {
+  .chatMenu {
+    flex: 1;
+  }
+
+  .chatMenuInput {
+    display: none;
+  }
+
+  .chatBox{
+    flex: 10;
+  }
+
+  .chatOnline{
+    flex: 1px;
+  }
+}
+
+
+.controls-container {
+  height: 15%;
+  display: flex;
+  justify-content: space-evenly;
+  padding: 0.5rem;
+}
+
+.recorder-display {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  font-size: 2rem;
+}
+
+@keyframes animated-block {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.recording-indicator {
+  width: 10px;
+  height: 10px;
+  margin-right: 0.5rem;
+  border-radius: 50%;
+  background-color: #099fff;
+  animation-name: animated-block;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+}
+
+.recording-time {
+  width: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cancel-button-container {
+  width: 20%;
+  display: grid;
+  place-content: center;
+  animation-name: animated-block;
+  animation-duration: 2s;
+}
+
+.start-button,
+.cancel-button {
+  border: none;
+  border-radius: 50%;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.cancel-button:hover {
+  color: #fd1c03;
+}
+
+.cancel-button {
+  width: 25px;
+  height: 25px;
+}
+
+.start-button-container {
+  width: 15%;
+  display: grid;
+  place-content: center;
+}
+
+.start-button:hover {
+  color: #41295a;
+  background-color: #f2ea02;
+}
+
+.start-button {
+  width: 40px;
+  height: 40px;
+}
