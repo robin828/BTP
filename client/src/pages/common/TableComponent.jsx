@@ -87,7 +87,7 @@ export default function TableComponent() {
   // const url = "http://localhost:5000"
 
   React.useEffect(()=>{
-    Axios.get('${url}/api/videos').then(res=>{
+    Axios.get(`${url}/api/videos`).then(res=>{
       // setRows(res.data)
       // let arr = [];
       res.data.map((r, i)=>{
