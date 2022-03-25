@@ -96,7 +96,7 @@ export default function useRecorder() {
         const blob = new Blob(chunks, { type: "audio/ogg" });
         // localStorage.setItem('blob', (blob));
         // console.log(JSON.parse(localStorage.getItem('blob')), "{{}}{}{")
-        // axios.post('http://localhost:5000/add/blob', {blob: blob}).then(res)
+        // axios.post('${url}/add/blob', {blob: blob}).then(res)
         console.log(blob, "{{}}+++")
         setAudioBlob(blob)
         chunks = [];

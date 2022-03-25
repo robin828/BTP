@@ -17,11 +17,14 @@ const MessageListing = ({
 }) => {
   const [newMessages, setNewMessages] = useState();
   const [searchStudent, setSearchStudent] = useState();
+  const url = "http://class.chartr.in:5000"
+  // const url = "http://localhost:5000"
   useEffect(() => {
-    Axios.get(`http://localhost:5000/api/get/users?profId=${profId}&videoId=${videoId}`).then(
+    Axios.get(`${url}/api/get/users?profId=${profId}&videoId=${videoId}`).then(
       (res) => {
+        // if(searchStudent)
         setNewMessages(
-          res.data.filter((stu) => stu.studentName === searchStudent)
+          res.data
         );
       }
     );
@@ -32,6 +35,19 @@ const MessageListing = ({
     setStudentName(mes.name);
     setCurrentChat(false);
   };
+  console.log(newMessages, searchStudent, "++")
+
+  const handleSearch = () => {
+    Axios.get(`${url}/api/get/users?profId=${profId}&videoId=${videoId}`).then(
+      (res) => {
+        // if(searchStudent)
+        setNewMessages(
+          res.data.filter((stu) => stu.name === searchStudent)
+        );
+      }
+    );
+    
+  }
 
   return (
     <div>
@@ -44,7 +60,8 @@ const MessageListing = ({
           fullWidth
           variant="outlined"
         />
-        <IconButton>Search</IconButton>
+        {/* <IconButton>Search</IconButton> */}
+        <IconButton onClick={handleSearch} >Filters</IconButton>
       </div>
 
       {newMessages &&

@@ -83,9 +83,11 @@ export default function TableComponent() {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const history = useHistory()
   const [rows, setRows] = React.useState([]);
+  const url = "http://class.chartr.in:5000"
+  // const url = "http://localhost:5000"
 
   React.useEffect(()=>{
-    Axios.get('http://localhost:5000/api/videos').then(res=>{
+    Axios.get('${url}/api/videos').then(res=>{
       // setRows(res.data)
       // let arr = [];
       res.data.map((r, i)=>{

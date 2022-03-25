@@ -3,7 +3,7 @@ import React from 'react'
 import TableComponent from '../common/TableComponent';
 
 const LandingPage = () => {
-    // Axios.get('http://localhost:5000')
+    // Axios.get('${url}')
     return (
         <div >
             <div style={{margin: '2rem'}} > 

@@ -15,10 +15,12 @@ const LoginPage = () => {
     console.log("googleData", result);
     alert(result);
   };
+  const url = "http://class.chartr.in:5000"
+  // const url = "http://localhost:5000"
 
   
   const onSuccess = async (googleData) => {
-    axios.post('http://localhost:5000/api/login', {
+    axios.post('${url}/api/login', {
         token: googleData.tokenId,
       }).then(res=>{
         console.log(res)

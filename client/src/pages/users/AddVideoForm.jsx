@@ -28,6 +28,8 @@ const AddVideoForm = () => {
       label: "¥",
     },
   ];
+  const url = "http://class.chartr.in:5000"
+  // const url = "http://localhost:5000"
 
   const handleClick = () => {
       const payload = {
@@ -37,7 +39,7 @@ const AddVideoForm = () => {
           subTopic,
           videoLink
       }
-      Axios.post('http://localhost:5000/api/add/video', payload).then(res=>{
+      Axios.post('${url}/api/add/video', payload).then(res=>{
           console.log(res.data);
       })
   }

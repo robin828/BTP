@@ -67,17 +67,19 @@ export default function Messenger({ videoId, isPaused, pausedTime }) {
     socket.current.on("getUsers", (users) => {});
   }, [userId]);
 
+  const url = "http://class.chartr.in:5000"
+  // const url = "http://localhost:5000"
   useEffect(() => {
     const getMessages = async () => {
       try {
         let res;
         if (admin === "true") {
           res = await axios.get(
-            `http://localhost:5000/api/messages?profId=${userId}&videoId=${videoId}&studentId=${studentId}`
+            `${url}/api/messages?profId=${userId}&videoId=${videoId}&studentId=${studentId}`
           );
         } else
           res = await axios.get(
-            `http://localhost:5000/api/messages?studentId=${userId}&videoId=${videoId}&profId=${"620e7f3e9135ef9f29cf75a3"}`
+            `${url}/api/messages?studentId=${userId}&videoId=${videoId}&profId=${"620e7f3e9135ef9f29cf75a3"}`
           );
         setMessages(res.data.messages);
       } catch (err) {
@@ -95,7 +97,7 @@ export default function Messenger({ videoId, isPaused, pausedTime }) {
     var formData = new FormData();
     formData.append("files", e.target.files[0]);
     axios
-      .post("http://localhost:5000/api/add/file", formData, {})
+      .post("${url}/api/add/file", formData, {})
       .then((res) => {
         console.log(res);
       });
@@ -183,7 +185,7 @@ export default function Messenger({ videoId, isPaused, pausedTime }) {
 
     try {
       await axios.post(
-        "http://localhost:5000/api/messages",
+        "${url}/api/messages",
         message
       );
       console.log(message.audioData, "{{}{}{}}")
@@ -247,7 +249,7 @@ export default function Messenger({ videoId, isPaused, pausedTime }) {
                           <Message
                             message={
                               typeof m.text === "string"
-                                ? "http://localhost:5000/images/" + m.text
+                                ? "${url}/images/" + m.text
                                 : "data:image/jpeg;base64," +
                                   ab2str(m.text, "base64")
                             }
