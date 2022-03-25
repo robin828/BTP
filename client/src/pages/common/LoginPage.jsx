@@ -13,14 +13,14 @@ const LoginPage = () => {
 
   const onFailure = (result) => {
     console.log("googleData", result);
-    alert(result);
+    // alert(result);
   };
   const url = "http://class.chartr.in:5000"
   // const url = "http://localhost:5000"
 
   
   const onSuccess = async (googleData) => {
-    axios.post('${url}/api/login', {
+    axios.post(`${url}/api/login`, {
         token: googleData.tokenId,
       }).then(res=>{
         console.log(res)
@@ -31,7 +31,6 @@ const LoginPage = () => {
         localStorage.setItem('userId', res.data.userId)
       });
         history.push('/user/login')
-      
   };
   
 const { signIn } = useGoogleLogin({
