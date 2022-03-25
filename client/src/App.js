@@ -11,6 +11,7 @@ import ChatPage from "./pages/users/ChatPage";
 import AddVideoForm from "./pages/users/AddVideoForm";
 
 function App() {
+  alert("8")
   const [isLoggedIn, setIsLoggedIn] = React.useState();
   return (
     <div>

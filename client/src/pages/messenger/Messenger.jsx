@@ -97,7 +97,7 @@ export default function Messenger({ videoId, isPaused, pausedTime }) {
     var formData = new FormData();
     formData.append("files", e.target.files[0]);
     axios
-      .post("${url}/api/add/file", formData, {})
+      .post(`${url}/api/add/file`, formData, {})
       .then((res) => {
         console.log(res);
       });
@@ -185,7 +185,7 @@ export default function Messenger({ videoId, isPaused, pausedTime }) {
 
     try {
       await axios.post(
-        "${url}/api/messages",
+        `${url}/api/messages`,
         message
       );
       console.log(message.audioData, "{{}{}{}}")
