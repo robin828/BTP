@@ -17,10 +17,10 @@ import backButton from "../common/resources/back.png";
 import { io } from "socket.io-client";
 import MessageListing from "../users/MessageListing";
 
-export default function Messenger({ videoId, isPaused, pausedTime }) {
+export default function Messenger({ videoId, isPaused, pausedTime, googleLoggedIn }) {
   const { recorderState, audioBlob, ...handlers } = useRecorder();
   const { recordingMinutes, recordingSeconds, initRecording, audio } = recorderState;
-  const { cancelRecording, startRecording, saveRecording } = handlers;
+  const { cancelRecording, startRecording, saveRecording } = handlers; 
 
   const [currentChat, setCurrentChat] = useState(null);
   const [messages, setMessages] = useState([]);
@@ -37,7 +37,7 @@ export default function Messenger({ videoId, isPaused, pausedTime }) {
   const scrollRef = useRef();
 
   useEffect(() => {
-    socket.current = io("ws://localhost:8900");
+    socket.current = io("ws://class.chartr.in:8900");
     socket.current.on("getMessage", (data) => {
       console.log(data, "{{}{}}");
       // alert("4$$$")
@@ -87,7 +87,7 @@ export default function Messenger({ videoId, isPaused, pausedTime }) {
       }
     };
     getMessages();
-  }, [currentChat]);
+  }, [currentChat, googleLoggedIn]);
 
   const handleAddFiles = (e) => {
     console.log("{}{}");

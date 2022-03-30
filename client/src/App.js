@@ -24,10 +24,13 @@ function App() {
               {/* <LoginPage setIsLoggedIn={setIsLoggedIn} /> */}
               <Route exact path="/" component={LoginPage} />
               <Route exact path="/user/login" render={() => <UserLogin setIsLoggedIn={setIsLoggedIn} />} />
-              {localStorage.getItem('email') && <Header />}
-              {localStorage.getItem('email') && <Route exact path="/videos" component={LandingPage} />}
+              {<Header />}
+              {<Route exact path="/videos" component={LandingPage} />}
+              {<Route exact path="/videos/:id" component={ChatPage} />}
+              {<Route exact path="/add/video" component={AddVideoForm} />}
+              {/* {localStorage.getItem('email') && <Route exact path="/videos" component={LandingPage} />}
               {localStorage.getItem('email') && <Route exact path="/videos/:id" component={ChatPage} />}
-              {localStorage.getItem('email') && <Route exact path="/add/video" component={AddVideoForm} />}
+              {localStorage.getItem('email') && <Route exact path="/add/video" component={AddVideoForm} />} */}
             </>
           </Switch>
         </Router>
