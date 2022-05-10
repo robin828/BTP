@@ -9,6 +9,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import LandingPage from "./pages/users/LandingPage";
 import ChatPage from "./pages/users/ChatPage";
 import AddVideoForm from "./pages/users/AddVideoForm";
+import VideoAnalytics from "./pages/users/VideoAnalytics";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = React.useState();
@@ -28,6 +29,8 @@ function App() {
               {<Route exact path="/videos" component={LandingPage} />}
               {<Route exact path="/videos/:id" component={ChatPage} />}
               {<Route exact path="/add/video" component={AddVideoForm} />}
+              {<Route exact path="/videos/analytics/:id" component={VideoAnalytics} />}
+
               {/* {localStorage.getItem('email') && <Route exact path="/videos" component={LandingPage} />}
               {localStorage.getItem('email') && <Route exact path="/videos/:id" component={ChatPage} />}
               {localStorage.getItem('email') && <Route exact path="/add/video" component={AddVideoForm} />} */}

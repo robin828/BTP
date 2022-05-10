@@ -10,7 +10,7 @@ const fileupload = require("express-fileupload");
 const app = express();
 app.use(fileupload());
 app.use(bodyParser.json());
-console.log(app)
+// console.log(app)
 app.use('/images', express.static("files"));
 
 app.use((req, res, next) => {

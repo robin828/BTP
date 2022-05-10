@@ -6,22 +6,32 @@ import Axios from "axios";
 import YouTube from "react-youtube";
 import axios from "axios";
 import { useGoogleLogin } from "react-google-login";
-
-
+import { formatTime } from "../utils/format-time";
+import useTimer from "../components/useTimer";
 import { useParams } from "react-router-dom";
+import { useHistory } from 'react-router-dom'
+// import { useParams } from "react-router-dom";
+
+
 
 const ChatPage = () => {
   const [videoUrl, setVideoUrl] = React.useState("");
   const [isPaused, setIsPaused] = React.useState(false);
   const [pausedTime, setPausedTime] = React.useState(0);
+  const { timer, isActive, isPause, handleStart, handlePause, handleResume, handleReset, setTimer } = useTimer(0)
+  const history = useHistory()
+
 
   const checkElapsedTime = (e) => {
+
     console.log(e.target.playerInfo.playerState);
     const duration = e.target.getDuration();
     const currentTime = e.target.getCurrentTime();
-    // if(is÷\
+    // console.log(formatTime(Math.round(currentTime)), "{{}}{{}})))")
+    setTimer(Math.round(currentTime))
+    handlePause();
     setIsPaused(true);
-    console.log(currentTime, ")))");
+    // console.log(currentTime, ")))");
     setPausedTime(currentTime);
   };
 
@@ -30,31 +40,61 @@ const ChatPage = () => {
       autoplay: 1,
     },
   };
+  
 
   const id = useParams().id;
   const param = id ? id : "";
   const [video, setVideo] = React.useState();
   const ref = useRef();
-  const url = "http://class.chartr.in:5000";
+  // const url = "http://class.chartr.in:5000";
   // const url = "http://localhost:5000"
   React.useEffect(() => {
-    Axios.get(`${url}/api/video/?id=${param}`).then((res) =>
+    Axios.get(`${url}/api/video/?id=${param}`).then((res) => {
       setVideo(res.data.video)
-    );
-    setVideoUrl(
-      "https://www.youtube.com/watch?v=XkMi4tBoxfE".split("v=")[1].split("&")[0]
-    );
+      setVideoUrl(
+        res.data.video.videoLink.split("v=")[1].split("&")[0]
+      );
+    });
+      
+    
   }, []);
 
   const clientId = "325542883606-uq9ai4emg3e3r524jusu5rfgjtk8ga22.apps.googleusercontent.com";
   const [googleLoggedIn, setGoogleLoggedIn] = useState(false);
 
+
+  // const id = useParams().id;
+  // const param = id ? id : "";
   const onFailure = (result) => {
-    console.log("googleData", result);
+    // console.log("googleData", result);
     // alert(result);
   };
   // const url = "http://class.chartr.in:5000"
-  // const url = "http://localhost:5000"
+  const url = "http://localhost:5000"
+
+  const handlePlay = () => {
+    handleStart();
+  }
+
+//   function foo() {
+
+//     console.log("**", timer)
+    
+
+//     setTimeout(foo, 5000);
+// }
+// foo()
+// setTimeout(console.log("**", timer), 5000);
+
+if(timer%60===0) {
+  axios.post(`${url}/api/save/videotime`, {
+    time: timer,
+    videoId: param,
+    userId: localStorage.getItem('userId'),
+    profId: "620e7f3e9135ef9f29cf75a3"
+  })
+  console.log("**", timer)
+}
 
   
   const onSuccess = async (googleData) => {
@@ -92,7 +132,11 @@ const { signIn } = useGoogleLogin({
             color: "#344663",
           }}
         >
-          Monday Lecture - 28/01/2022
+          Monday Lecture - 28/01/2022  - <span onClick={() => {
+                    history.push(
+                        `/videos/analytics/${param}`
+                    )
+                }} >Analysis</span>
         </Typography>{" "}
       </div>
       <Grid
@@ -109,9 +153,10 @@ const { signIn } = useGoogleLogin({
             height="715"
             containerClassName="embed embed-youtube"
             onPause={(e) => checkElapsedTime(e)}
-            onPlay={() => setIsPaused(false)}
+            onPlay={handlePlay}
             opts={opts}
           />
+          {formatTime(timer)}
         </Grid>
         {localStorage.getItem("email") || googleLoggedIn ? (
           <Grid item style={{ width: "400px" }}>

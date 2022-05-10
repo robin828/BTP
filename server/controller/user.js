@@ -7,6 +7,8 @@ const multer = require('multer')
 const { OAuth2Client } = require('google-auth-library');
 
 var mongoose = require("mongoose");
+const videoWatchTime = require("../models/videoWatchTime");
+const message = require("../models/message");
 const clientId = "325542883606-uq9ai4emg3e3r524jusu5rfgjtk8ga22.apps.googleusercontent.com";
 
 const client = new OAuth2Client(clientId);
@@ -39,7 +41,7 @@ const login = async (req, res, next) => {
   }
   else {
     try {
-      console.log(user)
+      // console.log(user)
         await user.save();
     } catch (error) {
         console.log(error)
@@ -103,7 +105,7 @@ const getOneVideo = async (req, res, next )=> {
 
 const addMessages = async (req, res, next) => {
   const {sender, videoId, reciver, text, topic, subTopic, studentId, profId, studentName, type, audioData, pausedTime} = req.body
-  console.log(audioData)
+  // console.log(audioData)
   // console.log(sender, videoId, reciver, text, topic, subTopic)
 
   const newMessage = new Message({
@@ -151,7 +153,7 @@ const getUsers = async (req, res, next) => {
   let filteredMessages = [];
 
   unSeenMessages.forEach((mes)=>{
-    console.log(mes, '{{}}', videoId)
+    // console.log(mes, '{{}}', videoId)
     // console.log(mes.studentId)
 
     if(!filteredMessages.find((item)=>item.id===mes.studentId) && videoId===mes.videoId) {
@@ -172,7 +174,7 @@ const addFiles = (req, res, next) => {
   const newpath = "./files/";
   const file = req.files.files;
   const filename = file.name;
-  console.log(filename);
+  // console.log(filename);
   file.mv(`${newpath}${filename}`, (err) => {
     if (err) {
       console.log(err)
@@ -181,14 +183,89 @@ const addFiles = (req, res, next) => {
     res.status(200).send({ message: "File Uploaded", code: 200 });
   });
   
-console.log(filename, "{{}}")
-console.log("***")
+// console.log(filename, "{{}}")
+// console.log("***")
 // upload.single('profileImg');
 
 }
 
+const saveVideoTime = async (req, res, next) => {
+  const { userId, videoId, time, profId } = req.body;
+  console.log(userId, videoId, time, profId, "PPPOOO")
 
+  let alreadyViewed;
+  // console.log(profId, videoId, "{{}}")
+  try {
+    alreadyViewed = await videoWatchTime.find({$and: [{videoId}, {userId}]})
+  } catch (error) {
+    console.log(error)
+  }
+  console.log(alreadyViewed)
+  if(alreadyViewed.length===0) {
+    try {
+      // console.log("))((")
+      const watchTime = new videoWatchTime({
+        userId, videoId, time, profId
+      })
+      await watchTime.save({userId, videoId, time, profId})
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  else {
+    try {
 
+      // console.log("))((21")
+      if(time>alreadyViewed[0].time) {
+        const id = alreadyViewed.userId
+        console.log(id)
+        const result = await videoWatchTime.updateOne({userId: id}, {$set: {time: time}})
+        // alreadyViewed[0].time = time
+      }
+
+      res.send("done")
+
+      // await alreadyViewed[0].save({})
+    } catch (error) {
+      console.log(error)
+    }
+    // res.send()
+  }
+
+}
+
+const videoAnalytics = async (req, res, next) => {
+  const {videoId, userId, profId} = req.body;
+  let analysis;
+  console.log(profId, videoId, "{{}}")
+  try {
+    analysis = await videoWatchTime.find({$and: [{videoId}, {profId}]})
+  } catch (error) {
+    console.log(error)
+  }
+
+  console.log(analysis)
+  res.json({analysis})
+}
+
+const getAllMessages = async (req, res, next) => {
+  const {id} = req.query
+  console.log(id)
+  let allMessages;
+  // console.log(profId, videoId, "{{}}")
+  try {
+    allMessages = await message.find({videoId: id})
+  } catch (error) {
+    console.log(error)
+  }
+  let doubtTime = []
+  allMessages.forEach(time=>doubtTime.push(time.pausedTime))
+
+  console.log(doubtTime, "{}{}")
+  res.json({doubtTime})
+  
+
+}
 
 exports.login = login;
 exports.addVideo = addVideo;
@@ -198,3 +275,6 @@ exports.addMessages = addMessages;
 exports.getMessages = getMessages;
 exports.getUsers = getUsers;
 exports.addFiles = addFiles;
+exports.saveVideoTime = saveVideoTime;
+exports.videoAnalytics = videoAnalytics;
+exports.getAllMessages = getAllMessages;
