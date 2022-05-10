@@ -79,7 +79,7 @@ export default function Messenger({ videoId, isPaused, pausedTime, googleLoggedI
           );
         } else
           res = await axios.get(
-            `${url}/api/messages?studentId=${userId}&videoId=${videoId}&profId=${"620e7f3e9135ef9f29cf75a3"}`
+            `${url}/api/messages?studentId=${userId}&videoId=${videoId}&profId=${"627a811f70b2eec90b51307c"}`
           );
         setMessages(res.data.messages);
       } catch (err) {
@@ -118,7 +118,7 @@ export default function Messenger({ videoId, isPaused, pausedTime, googleLoggedI
     let receiverId;
     alert("**")
     if (admin === "true") receiverId = studentId;
-    else receiverId = "620e7f3e9135ef9f29cf75a3";
+    else receiverId = "627a811f70b2eec90b51307c";
     let message;
     if (admin === "true") {
       message = {
@@ -142,7 +142,7 @@ export default function Messenger({ videoId, isPaused, pausedTime, googleLoggedI
         type: "text",
         reciver: receiverId,
         studentName: localStorage.getItem("name"),
-        profId: "620e7f3e9135ef9f29cf75a3",
+        profId: "627a811f70b2eec90b51307c",
         studentId: userId,
         audioData: "null"
         // conversationId: currentChat._id,
