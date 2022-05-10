@@ -46,7 +46,7 @@ const ChatPage = () => {
   const param = id ? id : "";
   const [video, setVideo] = React.useState();
   const ref = useRef();
-  const url = "http://class.chartr.in:5000";
+  const url = "https://class.chartr.in";
   // const url = "http://localhost:5000"
   React.useEffect(() => {
     Axios.get(`${url}/api/video/?id=${param}`).then((res) => {

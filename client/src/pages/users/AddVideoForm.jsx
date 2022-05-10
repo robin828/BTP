@@ -28,7 +28,7 @@ const AddVideoForm = () => {
       label: "¥",
     },
   ];
-  const url = "http://class.chartr.in:5000"
+  const url = "https://class.chartr.in"
   // const url = "http://localhost:5000"
 
   const handleClick = () => {

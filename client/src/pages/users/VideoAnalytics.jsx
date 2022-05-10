@@ -56,7 +56,7 @@ const VideoAnalytics = () => {
   //   const labels = ['S1'];
 
 //   const url = "http://localhost:5000";
-const url = "http://class.chartr.in:5000";
+const url = "https://class.chartr.in";
 
   const [video, setVideo] = useState();
   const [watchTime, setWatchTime] = useState([]);

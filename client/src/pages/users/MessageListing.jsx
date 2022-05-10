@@ -72,7 +72,7 @@ const MessageListing = ({
     setChooseFilter(true);
     setAnchorEl(null);
   };
-  const url = "http://class.chartr.in:5000";
+  const url = "https://class.chartr.in";
   // const url = "http://localhost:5000"
   useEffect(() => {
     Axios.get(`${url}/api/get/users?profId=${profId}&videoId=${videoId}`).then(
