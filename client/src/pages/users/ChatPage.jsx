@@ -70,7 +70,7 @@ const ChatPage = () => {
     // alert(result);
   };
   // const url = "http://class.chartr.in:5000"
-  const url = "http://localhost:5000"
+  // const url = "http://localhost:5000"
 
   const handlePlay = () => {
     handleStart();
