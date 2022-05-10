@@ -15,6 +15,7 @@ const client = new OAuth2Client(clientId);
 
 const login = async (req, res, next) => {
     const { token } = req.body;
+    console.log(token, "PPP")
   const ticket = await client.verifyIdToken({
     idToken: token,
     audience: clientId,
@@ -263,7 +264,7 @@ const getAllMessages = async (req, res, next) => {
 
   console.log(doubtTime, "{}{}")
   res.json({doubtTime})
-  
+
 
 }
 
