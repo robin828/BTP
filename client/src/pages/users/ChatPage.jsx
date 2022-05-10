@@ -40,13 +40,13 @@ const ChatPage = () => {
       autoplay: 1,
     },
   };
-  
+
 
   const id = useParams().id;
   const param = id ? id : "";
   const [video, setVideo] = React.useState();
   const ref = useRef();
-  // const url = "http://class.chartr.in:5000";
+  const url = "http://class.chartr.in:5000";
   // const url = "http://localhost:5000"
   React.useEffect(() => {
     Axios.get(`${url}/api/video/?id=${param}`).then((res) => {
