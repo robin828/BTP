@@ -9,7 +9,7 @@ import axios from "axios";
 
 
 const LoginPage = () => {
-  const clientId = "325542883606-uq9ai4emg3e3r524jusu5rfgjtk8ga22.apps.googleusercontent.com";
+  const clientId = "325542883606-e4b5v6036u5a32siipql0b0c5ouv8i9l.apps.googleusercontent.com";
   const history = useHistory();
 
   const [googleLoggedIn, setGoogleLoggedIn] = useState(false);
@@ -18,7 +18,7 @@ const LoginPage = () => {
     console.log("googleData", result);
     // alert(result);
   };
-  const url = "http://class.chartr.in:5000"
+  const url = "https://class.chartr.in:5000"
   // const url = "http://localhost:5000"
 
   
