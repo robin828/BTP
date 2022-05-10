@@ -18,7 +18,7 @@ const LoginPage = () => {
     console.log("googleData", result);
     // alert(result);
   };
-  const url = "https://class.chartr.in/api/"
+  const url = "https://class.chartr.in"
   // const url = "http://localhost:5000"
 
   

@@ -28,10 +28,6 @@ app.get('/', (req, res) => {
 });
 app.use('/api', userRoutes)
 
-// app.use("/api/conversations", conversationRoute);
-// app.use("/api/messages", messageRoute);
-// app.listen(5000, () =>{console.log("opop")})
-
 
 try {
     app.listen(5000, () => {
