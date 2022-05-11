@@ -68,8 +68,8 @@ export default function Messenger({ videoId, isPaused, pausedTime, googleLoggedI
     socket.current.on("getUsers", (users) => {});
   }, [userId]);
 
-  // const url = "https://class.chartr.in"
-  const url = "http://localhost:5000"
+  const url = "https://class.chartr.in"
+  // const url = "http://localhost:5000"
   useEffect(() => {
     const getMessages = async () => {
       try {
