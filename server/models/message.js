@@ -50,6 +50,9 @@ const userSchema = new mongoose.Schema({
         required: true
     }, audioData: {
         type: String
+    },
+    uploadedImage: {
+        type: String
     }
 }, {timestamps: true})
 

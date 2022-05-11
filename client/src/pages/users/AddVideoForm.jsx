@@ -37,9 +37,10 @@ const AddVideoForm = () => {
           topic,
           typeOfVideo,
           subTopic,
-          videoLink
+          videoLink,
+          videoUploader: localStorage.getItem('userId')
       }
-      Axios.post('${url}/api/add/video', payload).then(res=>{
+      Axios.post(`${url}/api/add/video`, payload).then(res=>{
           console.log(res.data);
       })
   }

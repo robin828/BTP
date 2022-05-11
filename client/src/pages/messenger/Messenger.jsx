@@ -31,6 +31,7 @@ export default function Messenger({ videoId, isPaused, pausedTime, googleLoggedI
   const socket = useRef();
   const [studentName, setStudentName] = useState();
   const [uploadedFile, seUploadedFile] = useState();
+  const [binaryImage, setBinaryImage] = useState()
   const userId = localStorage.getItem("userId");
   const admin = localStorage.getItem("admin");
 
@@ -67,8 +68,8 @@ export default function Messenger({ videoId, isPaused, pausedTime, googleLoggedI
     socket.current.on("getUsers", (users) => {});
   }, [userId]);
 
-  const url = "https://class.chartr.in"
-  // const url = "http://localhost:5000"
+  // const url = "https://class.chartr.in"
+  const url = "http://localhost:5000"
   useEffect(() => {
     const getMessages = async () => {
       try {
@@ -116,7 +117,7 @@ export default function Messenger({ videoId, isPaused, pausedTime, googleLoggedI
   const handleSubmit = async (e) => {
     e.preventDefault();
     let receiverId;
-    alert("**")
+    // alert("**")
     if (admin === "true") receiverId = studentId;
     else receiverId = "627a811f70b2eec90b51307c";
     let message;
@@ -131,7 +132,8 @@ export default function Messenger({ videoId, isPaused, pausedTime, googleLoggedI
         type: "text",
         profId: userId,
         studentId: studentId,
-        audioData: "null"
+        audioData: "null",
+        uploadedImage: null
       };
     } else {
       message = {
@@ -144,18 +146,47 @@ export default function Messenger({ videoId, isPaused, pausedTime, googleLoggedI
         studentName: localStorage.getItem("name"),
         profId: "627a811f70b2eec90b51307c",
         studentId: userId,
-        audioData: "null"
+        audioData: "null",
+        uploadedImage: null
         // conversationId: currentChat._id,
       };
     }
 
     if (uploadedFile) {
+      const data = await blobToBase64(uploadedFile)
+      console.log(data, "P{P{P")
+      
+  //     var reader = new FileReader();
+  // reader.onloadend = function() {
+  //   console.log('RESULT', reader.result)
+  //   message.text = reader.result
+  // }
+  // var op = reader.readAsDataURL(uploadedFile);
+  // console.log(op, 'RESULT')
+  // console.log(message.text, 'RESULT', reader)
+  // let ans;
+  // var reader = new FileReader();
+  // reader.onloadend = function(ans) {
+  //   console.log('File String:', reader.result);
+  //   ans = reader.result
+  //   console.log(ans, 'File String:', reader.result)
+  //   /******************* for Binary ***********************/
+  //   var data=(reader.result).split(',')[1];
+  //    var binaryBlob = atob(data);
+  //    console.log('File String:', binaryBlob);
+  // }
+  message.text = data.split(',')[1]
+  
+  // reader.then
+  // reader.readAsDataURL(uploadedFile);
+  // console.log(ans, "File String:")
+      // console.log(uploadedFile, reader.result, "RESULT")
       message.type = "image";
       socket.current.emit("sendMessage", {
         senderId: userId,
         receiverId: receiverId,
         text: uploadedFile,
-        pausedTime:pausedTime,
+        pausedTime: pausedTime,
         type: "image",
       });
     } 
@@ -247,12 +278,14 @@ export default function Messenger({ videoId, isPaused, pausedTime, googleLoggedI
                         )}
                         {m.type === "image" && (
                           <Message
-                            message={
-                              typeof m.text === "string"
-                                ? `${url}/images/` + m.text
-                                : "data:image/jpeg;base64," +
-                                  ab2str(m.text, "base64")
+                            message={"data:image/jpeg;base64," + m.text
                             }
+                            // message={
+                            //   typeof m.text === "string"
+                            //     ? `${"class.chartr.in"}/images/` + m.text
+                            //     : "data:image/jpeg;base64," +
+                            //       ab2str(m.text, "base64")
+                            // }
                             own={m.sender === userId}
                             type="image"
                             // pausedTime={m.pausedTime}

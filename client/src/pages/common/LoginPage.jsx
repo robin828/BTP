@@ -9,7 +9,11 @@ import axios from "axios";
 
 
 const LoginPage = () => {
-  const clientId = "325542883606-e4b5v6036u5a32siipql0b0c5ouv8i9l.apps.googleusercontent.com";
+  const clientId = "325542883606-e4b5v6036u5a32siipql0b0c5ouv8i9l.apps.googleusercontent.com"; 
+  // const clientId = "325542883606-uq9ai4emg3e3r524jusu5rfgjtk8ga22.apps.googleusercontent.com";
+
+  // const clientId = "353286550918-7ueoro5qciugncvj97qsrg8k89contos.apps.googleusercontent.com";
+
   const history = useHistory();
 
   const [googleLoggedIn, setGoogleLoggedIn] = useState(false);

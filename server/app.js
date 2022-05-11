@@ -8,8 +8,13 @@ const fileupload = require("express-fileupload");
 // const messageRoute = require("./routes/messages");
 
 const app = express();
+// app.use(express.limit(100000000));
+
 app.use(fileupload());
-app.use(bodyParser.json());
+// app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+
 // console.log(app)
 app.use('/images', express.static("files"));
 
