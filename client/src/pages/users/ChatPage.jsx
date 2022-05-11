@@ -82,7 +82,7 @@ if(timer%60===0) {
     time: timer,
     videoId: param,
     userId: localStorage.getItem('userId'),
-    profId: video.videoUploader
+    profId: video&&video.videoUploader
   })
   console.log("**", timer)
 }
@@ -157,7 +157,7 @@ const { signIn } = useGoogleLogin({
               isPaused={isPaused}
               pausedTime={pausedTime}
               videoId={param}
-              videoUploader={video.videoUploader}
+              videoUploader={video&&video.videoUploader}
               googleLoggedIn={googleLoggedIn}
             />{" "}
           </Grid>
