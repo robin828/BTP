@@ -77,7 +77,7 @@ export default function Messenger({ videoId, isPaused, pausedTime, googleLoggedI
         let res;
         if (admin === "true") {
           res = await axios.get(
-            `${url}/api/messages?profId=${userId}&videoId=${videoId}&studentId=${studentId}`
+            `${url}/api/messages?profId=${userId}&videoId=${videoId}`
           );
         } else
           res = await axios.get(
