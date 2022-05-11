@@ -24,6 +24,9 @@ const addVideo = new mongoose.Schema({
     date: {
         type: Date,
         required: false
+    },
+    videoUploader: {
+        type: String
     }
 }, {timestamps: true})
 

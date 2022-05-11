@@ -76,22 +76,13 @@ const ChatPage = () => {
     handleStart();
   }
 
-//   function foo() {
-
-//     console.log("**", timer)
-    
-
-//     setTimeout(foo, 5000);
-// }
-// foo()
-// setTimeout(console.log("**", timer), 5000);
 
 if(timer%60===0) {
   axios.post(`${url}/api/save/videotime`, {
     time: timer,
     videoId: param,
     userId: localStorage.getItem('userId'),
-    profId: "620e7f3e9135ef9f29cf75a3"
+    profId: video.videoUploader
   })
   console.log("**", timer)
 }
@@ -107,6 +98,7 @@ if(timer%60===0) {
         localStorage.setItem('email', res.data.email)
         localStorage.setItem('name', res.data.name)
         localStorage.setItem('userId', res.data.userId)
+        localStorage.setItem('videoUploader', videoUploader)
       });
         // history.push('/user/login')
   };

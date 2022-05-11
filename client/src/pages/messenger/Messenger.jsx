@@ -34,6 +34,7 @@ export default function Messenger({ videoId, isPaused, pausedTime, googleLoggedI
   const [binaryImage, setBinaryImage] = useState()
   const userId = localStorage.getItem("userId");
   const admin = localStorage.getItem("admin");
+  const videoUploader = localStorage.getItem('videoUploader')
 
   const scrollRef = useRef();
 
@@ -80,7 +81,7 @@ export default function Messenger({ videoId, isPaused, pausedTime, googleLoggedI
           );
         } else
           res = await axios.get(
-            `${url}/api/messages?studentId=${userId}&videoId=${videoId}&profId=${"627a811f70b2eec90b51307c"}`
+            `${url}/api/messages?studentId=${userId}&videoId=${videoId}&profId=${videoUploader}`
           );
         setMessages(res.data.messages);
       } catch (err) {
@@ -119,7 +120,7 @@ export default function Messenger({ videoId, isPaused, pausedTime, googleLoggedI
     let receiverId;
     // alert("**")
     if (admin === "true") receiverId = studentId;
-    else receiverId = "627a811f70b2eec90b51307c";
+    else receiverId = videoUploader;
     let message;
     if (admin === "true") {
       message = {
@@ -144,7 +145,7 @@ export default function Messenger({ videoId, isPaused, pausedTime, googleLoggedI
         type: "text",
         reciver: receiverId,
         studentName: localStorage.getItem("name"),
-        profId: "627a811f70b2eec90b51307c",
+        profId: videoUploader,
         studentId: userId,
         audioData: "null",
         uploadedImage: null
