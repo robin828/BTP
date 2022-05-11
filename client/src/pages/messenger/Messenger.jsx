@@ -17,7 +17,7 @@ import backButton from "../common/resources/back.png";
 import { io } from "socket.io-client";
 import MessageListing from "../users/MessageListing";
 
-export default function Messenger({ videoId, isPaused, pausedTime, googleLoggedIn }) {
+export default function Messenger({ videoId, isPaused, pausedTime, googleLoggedIn, videoUploader }) {
   const { recorderState, audioBlob, ...handlers } = useRecorder();
   const { recordingMinutes, recordingSeconds, initRecording, audio } = recorderState;
   const { cancelRecording, startRecording, saveRecording } = handlers; 
@@ -34,7 +34,7 @@ export default function Messenger({ videoId, isPaused, pausedTime, googleLoggedI
   const [binaryImage, setBinaryImage] = useState()
   const userId = localStorage.getItem("userId");
   const admin = localStorage.getItem("admin");
-  const videoUploader = localStorage.getItem('videoUploader')
+  // const videoUploader = localStorage.getItem('videoUploader')
 
   const scrollRef = useRef();
 

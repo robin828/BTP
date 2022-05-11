@@ -98,7 +98,7 @@ if(timer%60===0) {
         localStorage.setItem('email', res.data.email)
         localStorage.setItem('name', res.data.name)
         localStorage.setItem('userId', res.data.userId)
-        localStorage.setItem('videoUploader', videoUploader)
+        // localStorage.setItem('videoUploader', video.videoUploader)
       });
         // history.push('/user/login')
   };
@@ -157,6 +157,7 @@ const { signIn } = useGoogleLogin({
               isPaused={isPaused}
               pausedTime={pausedTime}
               videoId={param}
+              videoUploader={video.videoUploader}
               googleLoggedIn={googleLoggedIn}
             />{" "}
           </Grid>
