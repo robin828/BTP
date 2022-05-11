@@ -18,6 +18,7 @@ import { io } from "socket.io-client";
 import MessageListing from "../users/MessageListing";
 
 export default function Messenger({ videoId, isPaused, pausedTime, googleLoggedIn, videoUploader }) {
+  console.log(videoUploader, "{}{}")
   const { recorderState, audioBlob, ...handlers } = useRecorder();
   const { recordingMinutes, recordingSeconds, initRecording, audio } = recorderState;
   const { cancelRecording, startRecording, saveRecording } = handlers; 
@@ -86,9 +87,11 @@ export default function Messenger({ videoId, isPaused, pausedTime, googleLoggedI
               `${url}/api/messages?profId=${userId}&videoId=${videoId}`
             );
           }
-          res = await axios.get(
-            `${url}/api/messages?profId=${userId}&videoId=${videoId}`
-          );
+          // res = await axios.get(
+          //   `${url}/api/messages?profId=${userId}&videoId=${videoId}`
+          // );
+
+
         } else
           res = await axios.get(
             `${url}/api/messages?studentId=${userId}&videoId=${videoId}&profId=${videoUploader}`
@@ -99,7 +102,7 @@ export default function Messenger({ videoId, isPaused, pausedTime, googleLoggedI
       }
     };
     getMessages();
-  }, [currentChat, googleLoggedIn]);
+  }, [currentChat, googleLoggedIn, videoUploader]);
 
   const handleAddFiles = (e) => {
     console.log("{}{}");

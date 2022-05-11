@@ -11,14 +11,17 @@ const videoWatchTime = require("../models/videoWatchTime");
 const message = require("../models/message");
 const clientId = "325542883606-e4b5v6036u5a32siipql0b0c5ouv8i9l.apps.googleusercontent.com";
 // const clientId = "325542883606-uq9ai4emg3e3r524jusu5rfgjtk8ga22.apps.googleusercontent.com";
+// const clientId = "325542883606-uq9ai4emg3e3r524jusu5rfgjtk8ga22.apps.googleusercontent.com";
+
 // const clientId = "353286550918-7ueoro5qciugncvj97qsrg8k89contos.apps.googleusercontent.com";
+// const clientId = "325542883606-uq9ai4emg3e3r524jusu5rfgjtk8ga22.apps.googleusercontent.com";
 
 
 const client = new OAuth2Client(clientId);
 
 const login = async (req, res, next) => {
     const { token } = req.body;
-    console.log(token, "PPP")
+    // console.log(token, "PPP")
   const ticket = await client.verifyIdToken({
     idToken: token,
     audience: clientId,
@@ -196,7 +199,7 @@ const addFiles = (req, res, next) => {
 
 const saveVideoTime = async (req, res, next) => {
   const { userId, videoId, time, profId } = req.body;
-  console.log(userId, videoId, time, profId, "PPPOOO")
+  // console.log(userId, videoId, time, profId, "PPPOOO")
 
   let alreadyViewed;
   // console.log(profId, videoId, "{{}}")
