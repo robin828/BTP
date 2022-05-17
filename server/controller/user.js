@@ -45,7 +45,7 @@ const login = async (req, res, next) => {
   }
   if (existingUser) {
     res.status(201);
-    res.json({ name, email, admin: existingUser.admin, userId: existingUser._id });
+    res.json({ name, email, admin: existingUser.admin, userId: existingUser._id, firstLogin: false });
   }
   else {
     try {
@@ -58,7 +58,7 @@ const login = async (req, res, next) => {
   
   //   upsert(users, { name, email, picture });
     res.status(201);
-    res.json({ name, email, admin, userId: _id });
+    res.json({ name, email, admin, userId: _id, firstLogin: true });
   }
 
   

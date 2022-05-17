@@ -37,7 +37,13 @@ const LoginPage = () => {
         localStorage.setItem('name', res.data.name)
         localStorage.setItem('userId', res.data.userId)
       });
+      if(res.firstLogin===true) {
+        alert('User Created. Please Login')
+      }
+      else {
         history.push('/user/login')
+
+      }
   };
   
 const { signIn } = useGoogleLogin({
