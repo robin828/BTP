@@ -9,8 +9,8 @@ const { OAuth2Client } = require('google-auth-library');
 var mongoose = require("mongoose");
 const videoWatchTime = require("../models/videoWatchTime");
 const message = require("../models/message");
-const clientId = "325542883606-e4b5v6036u5a32siipql0b0c5ouv8i9l.apps.googleusercontent.com";
-// const clientId = "325542883606-uq9ai4emg3e3r524jusu5rfgjtk8ga22.apps.googleusercontent.com";
+// const clientId = "325542883606-e4b5v6036u5a32siipql0b0c5ouv8i9l.apps.googleusercontent.com";
+const clientId = "325542883606-uq9ai4emg3e3r524jusu5rfgjtk8ga22.apps.googleusercontent.com";
 // const clientId = "325542883606-uq9ai4emg3e3r524jusu5rfgjtk8ga22.apps.googleusercontent.com";
 // const clientId = "353286550918-7ueoro5qciugncvj97qsrg8k89contos.apps.googleusercontent.com";
 
@@ -55,10 +55,19 @@ const login = async (req, res, next) => {
         console.log(error)
     }
   
+    try {
+      existingUser = await userModel.findOne({ email });
+    } catch (error) {
+      return res.status(400).send("something went wrong");
+    }
+    if (existingUser) {
+      res.status(201);
+      res.json({ name, email, admin: existingUser.admin, userId: existingUser._id, firstLogin: true });
+    }
   
   //   upsert(users, { name, email, picture });
-    res.status(201);
-    res.json({ name, email, admin, userId: _id, firstLogin: true });
+    // res.status(201);
+    // res.json({ name, email, admin, firstLogin: true });
   }
 
   
