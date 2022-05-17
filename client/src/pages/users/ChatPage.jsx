@@ -18,6 +18,8 @@ const ChatPage = () => {
   const [videoUrl, setVideoUrl] = React.useState("");
   const [isPaused, setIsPaused] = React.useState(false);
   const [pausedTime, setPausedTime] = React.useState(0);
+  const [topic, setTopic] = useState([]);
+
   const { timer, isActive, isPause, handleStart, handlePause, handleResume, handleReset, setTimer } = useTimer(0)
   const history = useHistory()
 
@@ -27,6 +29,7 @@ const ChatPage = () => {
     console.log(e.target.playerInfo.playerState);
     const duration = e.target.getDuration();
     const currentTime = e.target.getCurrentTime();
+
     // console.log(formatTime(Math.round(currentTime)), "{{}}{{}})))")
     setTimer(Math.round(currentTime))
     handlePause();
@@ -51,6 +54,8 @@ const ChatPage = () => {
   React.useEffect(() => {
     Axios.get(`${url}/api/video/?id=${param}`).then((res) => {
       setVideo(res.data.video)
+      setTopic(res.data.video.subTopic)
+      console.log(res.data.video.subTopic, "{}{}{}++__))(**&^^^^^")
       setVideoUrl(
         res.data.video.videoLink.split("v=")[1].split("&")[0]
       );
@@ -149,7 +154,7 @@ const { signIn } = useGoogleLogin({
           {formatTime(timer)}
         </Grid>
         {localStorage.getItem("email") || googleLoggedIn ? (
-          <Grid item style={{ width: "400px" }}>
+          <Grid item style={{ width: "420px" }}>
             {" "}
             <Messenger
               isPaused={isPaused}
@@ -157,6 +162,7 @@ const { signIn } = useGoogleLogin({
               videoId={param}
               videoUploader={video&&video.videoUploader}
               googleLoggedIn={googleLoggedIn}
+              subTopic= {topic}
             />{" "}
           </Grid>
         ) : (

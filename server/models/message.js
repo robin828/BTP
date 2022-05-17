@@ -53,6 +53,9 @@ const userSchema = new mongoose.Schema({
     },
     uploadedImage: {
         type: String
+    },
+    subTopic: {
+        type: String
     }
 }, {timestamps: true})
 

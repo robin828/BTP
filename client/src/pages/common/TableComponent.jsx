@@ -73,7 +73,7 @@ export default function TableComponent() {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const history = useHistory()
   const [rows, setRows] = React.useState([]);
-  const url = "https://class.chartr.in"
+   const url = "https://class.chartr.in"
   // const url = "http://localhost:5000"
 
   React.useEffect(()=>{

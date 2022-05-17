@@ -1,4 +1,6 @@
 import "./messenger.css";
+import * as React from 'react';
+
 import Message from "../components/message/Message";
 import { useEffect, useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -12,12 +14,17 @@ import paperClip from "../common/resources/paperclip.png";
 import "react-voice-recorder/dist/index.css";
 import ab2str from "arraybuffer-to-string";
 import useRecorder from "../components/useRecorder";
+
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 import { formatMinutes, formatSeconds } from "../utils/format-time";
 import backButton from "../common/resources/back.png";
 import { io } from "socket.io-client";
 import MessageListing from "../users/MessageListing";
 
-export default function Messenger({ videoId, isPaused, pausedTime, googleLoggedIn, videoUploader }) {
+export default function Messenger({ videoId, isPaused, pausedTime, googleLoggedIn, videoUploader, subTopic }) {
   console.log(videoUploader, "{}{}")
   const { recorderState, audioBlob, ...handlers } = useRecorder();
   const { recordingMinutes, recordingSeconds, initRecording, audio } = recorderState;
@@ -35,6 +42,11 @@ export default function Messenger({ videoId, isPaused, pausedTime, googleLoggedI
   const [binaryImage, setBinaryImage] = useState()
   const userId = localStorage.getItem("userId");
   const admin = localStorage.getItem("admin");
+  const [age, setAge] = React.useState('');
+
+  const handleChange = (event) => {
+    setAge(event.target.value);
+  };
   // const videoUploader = localStorage.getItem('videoUploader')
 
   const scrollRef = useRef();
@@ -70,7 +82,7 @@ export default function Messenger({ videoId, isPaused, pausedTime, googleLoggedI
     socket.current.on("getUsers", (users) => {});
   }, [userId]);
 
-  const url = "https://class.chartr.in"
+   const url = "https://class.chartr.in"
   // const url = "http://localhost:5000"
   useEffect(() => {
     const getMessages = async () => {
@@ -90,8 +102,6 @@ export default function Messenger({ videoId, isPaused, pausedTime, googleLoggedI
           // res = await axios.get(
           //   `${url}/api/messages?profId=${userId}&videoId=${videoId}`
           // );
-
-
         } else
           res = await axios.get(
             `${url}/api/messages?studentId=${userId}&videoId=${videoId}&profId=${videoUploader}`
@@ -145,6 +155,7 @@ export default function Messenger({ videoId, isPaused, pausedTime, googleLoggedI
         pausedTime:pausedTime,
         type: "text",
         profId: userId,
+        subTopic: age,
         studentId: studentId,
         audioData: "null",
         uploadedImage: null
@@ -157,6 +168,7 @@ export default function Messenger({ videoId, isPaused, pausedTime, googleLoggedI
         pausedTime:pausedTime,
         type: "text",
         reciver: receiverId,
+        subTopic: age,
         studentName: localStorage.getItem("name"),
         profId: videoUploader,
         studentId: userId,
@@ -165,7 +177,7 @@ export default function Messenger({ videoId, isPaused, pausedTime, googleLoggedI
         // conversationId: currentChat._id,
       };
     }
-
+// console.log(subsubTopic, '1234')
     if (uploadedFile) {
       const data = await blobToBase64(uploadedFile)
       console.log(data, "P{P{P")
@@ -198,6 +210,7 @@ export default function Messenger({ videoId, isPaused, pausedTime, googleLoggedI
       message.type = "image";
       socket.current.emit("sendMessage", {
         senderId: userId,
+        subTopic: age,
         receiverId: receiverId,
         text: uploadedFile,
         pausedTime: pausedTime,
@@ -214,6 +227,7 @@ export default function Messenger({ videoId, isPaused, pausedTime, googleLoggedI
         senderId: userId,
         receiverId: receiverId,
         pausedTime:message.pausedTime,
+        subTopic: age,
         text: message.text,
         type: "audio",
       });
@@ -223,6 +237,7 @@ export default function Messenger({ videoId, isPaused, pausedTime, googleLoggedI
         senderId: userId,
         receiverId: receiverId,
         text: newMessage,
+        subTopic: age,
         pausedTime:message.pausedTime,
         type: "text",
       });
@@ -241,6 +256,7 @@ export default function Messenger({ videoId, isPaused, pausedTime, googleLoggedI
       console.log(err);
     }
     seUploadedFile();
+    setAge()
   };
 
   useEffect(() => {
@@ -371,7 +387,27 @@ export default function Messenger({ videoId, isPaused, pausedTime, googleLoggedI
                     </label>
 
                     <div>
-                      <button className="chatSubmitButton">Add Topic</button>
+                      {/* <button className="chatSubmitButton">Add Topic</button> */}
+                      <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+        <InputLabel id="demo-simple-select-standard-label">Add Topic</InputLabel>
+        <Select
+          labelId="demo-simple-select-standard-label"
+          id="demo-simple-select-standard"
+          value={age}
+          onChange={handleChange}
+          label="Add Topic"
+        >
+          {/* <MenuItem value="">
+            <em>None</em>
+          </MenuItem> */}
+          {subTopic.map((val) => (
+            <MenuItem value={val}>{val}</MenuItem>
+          ))}
+          
+          {/* <MenuItem value={20}>Twenty</MenuItem>
+          <MenuItem value={30}>Thirty</MenuItem> */}
+        </Select>
+      </FormControl>
                       <button
                         className="chatSubmitButton"
                         onClick={newMessage!==""&&handleSubmit}

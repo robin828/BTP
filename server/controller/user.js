@@ -12,6 +12,7 @@ const message = require("../models/message");
 const clientId = "325542883606-e4b5v6036u5a32siipql0b0c5ouv8i9l.apps.googleusercontent.com";
 // const clientId = "325542883606-uq9ai4emg3e3r524jusu5rfgjtk8ga22.apps.googleusercontent.com";
 // const clientId = "325542883606-uq9ai4emg3e3r524jusu5rfgjtk8ga22.apps.googleusercontent.com";
+// const clientId = "353286550918-7ueoro5qciugncvj97qsrg8k89contos.apps.googleusercontent.com";
 
 // const clientId = "353286550918-7ueoro5qciugncvj97qsrg8k89contos.apps.googleusercontent.com";
 // const clientId = "325542883606-uq9ai4emg3e3r524jusu5rfgjtk8ga22.apps.googleusercontent.com";
@@ -64,20 +65,22 @@ const login = async (req, res, next) => {
 }
 
 const addVideo = async (req, res, next) => {
-  const {title, topic, typeOfVideo, subTopic, videoLink, videoUploader} = req.body;
+  const {title, topic, typeOfVideo, subTopic, videoLink, videoUploader, time} = req.body;
 
   const video = new Videos({
-    title, topic, typeOfVideo, subTopic, videoLink, videoUploader
+    title, topic, typeOfVideo, subTopic, videoLink, videoUploader, time
   })
 
   try {
     await video.save();
+    res.status(201);
+    res.json({ title, subTopic });
   } catch (error) {
+    res.status(500);
     console.log(error)
   }
 
-  res.status(201);
-    res.json({ title, topic });
+  
 }
 
 const getVideos = async (rea, res, next) => {
@@ -161,15 +164,13 @@ const getUsers = async (req, res, next) => {
   let filteredMessages = [];
 
   unSeenMessages.forEach((mes)=>{
-    // console.log(mes, '{{}}', videoId)
-    // console.log(mes.studentId)
-
     if(!filteredMessages.find((item)=>item.id===mes.studentId) && videoId===mes.videoId) {
       // console.log("***")
       // if()
       let obj = {};
       obj.id = mes.studentId;
       obj.name = mes.studentName;
+      obj.subTopic = mes.subTopic
       filteredMessages.push(obj)
     };
   })

@@ -95,10 +95,10 @@ const MessageListing = ({
   const handleSearch = (e, ind) => {
     Axios.get(`${url}/api/get/users?profId=${profId}&videoId=${videoId}`).then(
       (res) => {
-        console.log(res.data)
+        console.log(res.data, "))00")
         // if(searchStudent)
         if(ind===1) setNewMessages(res.data.filter((stu) => stu.name === searchStudent));
-        if(ind===2) setNewMessages(res.data.filter((top) => top.topic === searchTopic));
+        if(ind===2) setNewMessages(res.data.filter((top) => top.subTopic === searchTopic));
         let selectedStudent = [];
         if(ind===3) {
           res.data.map(user=>{

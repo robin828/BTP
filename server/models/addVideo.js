@@ -14,8 +14,11 @@ const addVideo = new mongoose.Schema({
         required: true
     },
     subTopic: {
-        type: String,
+        type: Array,
         // required: true
+    },
+    time: {
+        type: Number,
     },
     videoLink: {
         type: String,

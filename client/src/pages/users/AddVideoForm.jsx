@@ -1,52 +1,57 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { Typography, Grid, Button, TextareaAutosize } from "@mui/material";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
-import Axios from 'axios'
+import Axios from "axios";
+import MultipleValueTextInput from "react-multivalue-text-input";
+import "./addVideoForm.css";
+import { useHistory } from "react-router";
+
 const AddVideoForm = () => {
-    const [title, setTitle] = useState();
-    const [topic, setTopic] = useState();
-    const [typeOfVideo, setTypeOfVideo] = useState();
-    const [subTopic, setSubTopic] = useState();
-    const [videoLink, setVideoLink] = useState();
+  const [title, setTitle] = useState();
+  const [topic, setTopic] = useState();
+  const [typeOfVideo, setTypeOfVideo] = useState();
+  const [time, setTime] = useState();
+  const [subTopic, setSubTopic] = useState([]);
+  const [videoLink, setVideoLink] = useState();
+  const history = useHistory();
   const type = [
     {
-      value: "USD",
-      label: "$",
+      value: "Informative",
+      label: "Informative",
     },
     {
-      value: "EUR",
-      label: "€",
+      value: "Course Lecture",
+      label: "Course Lecture",
     },
     {
-      value: "BTC",
-      label: "฿",
-    },
-    {
-      value: "JPY",
-      label: "¥",
+      value: "Specific Topic",
+      label: "Specific Topic",
     },
   ];
+  console.log(subTopic);
   const url = "https://class.chartr.in"
-  // const url = "http://localhost:5000"
+  // const url = "http://localhost:5000/";
 
   const handleClick = () => {
-      const payload = {
-          title,
-          topic,
-          typeOfVideo,
-          subTopic,
-          videoLink,
-          videoUploader: localStorage.getItem('userId')
+    const payload = {
+      title,
+      topic,
+      typeOfVideo,
+      subTopic,
+      videoLink,
+      time,
+      videoUploader: localStorage.getItem("userId"),
+    };
+    Axios.post(`${url}api/add/video`, payload).then((res) => {
+      if(res.status === 201) {
+        history.push('/videos')
+        console.log(res.data);
       }
-      Axios.post(`https://class.chartr.in/api/add/video`, payload).then(res=>{
-          console.log(res.data);
-      })
-  }
+    });
+  };
 
-
-  
   return (
     <div>
       <Grid
@@ -94,7 +99,7 @@ const AddVideoForm = () => {
                     id="outlined-size-small"
                     // defaultValue="Small"
                     value={title}
-                    onChange={(e)=>setTitle(e.target.value)}
+                    onChange={(e) => setTitle(e.target.value)}
                     placeholder="Video Title"
                     size="small"
                   />
@@ -120,7 +125,7 @@ const AddVideoForm = () => {
                     id="outlined-size-small"
                     // defaultValue="Small"
                     value={topic}
-                    onChange={(e)=>setTopic(e.target.value)}
+                    onChange={(e) => setTopic(e.target.value)}
                     placeholder="Topic of the Video"
                     size="small"
                   />
@@ -151,7 +156,7 @@ const AddVideoForm = () => {
                     select
                     label="Select"
                     value={typeOfVideo}
-                    onChange={(e)=>setTypeOfVideo(e.target.value)}
+                    onChange={(e) => setTypeOfVideo(e.target.value)}
                     helperText="Please select type"
                   >
                     {type.map((option) => (
@@ -163,17 +168,41 @@ const AddVideoForm = () => {
                 </div>
               </Box>
             </Grid>
-            <Grid item>
+            <Grid item >
               <Box
                 component="form"
                 sx={{
-                  "& .MuiTextField-root": { m: 1, width: "25ch" },
+                  "& .MuiTextField-root": { m: 1, width: "30ch" },
                 }}
                 noValidate
                 autoComplete="off"
               >
                 <div>
+                  {/* <MultipleValueTextInput
+                  
+                    onItemAdded={(item, allItems) =>
+                      setSubTopic([...subTopic, item])
+                    }
+                    onItemDeleted={(item, allItems) =>
+                      setSubTopic((item) =>
+                        subTopic.filter((it, i) => item !== it)
+                      )
+                    }
+                    // label="Sub-Topic"
+                    // values={["default value"]}
+                    name="item-input"
+                    placeholder="Sub-Topic"
+                  /> */}
                   <TextField
+                    label="Duration of Video"
+                    id="outlined-size-small"
+                    // defaultValue="Small"
+                    value={time}
+                    onChange={(e) => setTime(e.target.value)}
+                    placeholder="Duration of the Video in minutes"
+                    size="small"
+                  />
+                  {/* <TextField
                     // id="outlined-select-currency"
                     select
                     label="Select"
@@ -186,11 +215,57 @@ const AddVideoForm = () => {
                         {option.label}
                       </MenuItem>
                     ))}
-                  </TextField>
+                  </TextField> */}
                 </div>
               </Box>
             </Grid>
           </Grid>
+        </Grid>
+        <Grid item>
+          {/* <Box
+      sx={{
+        width: 600,
+        height: 100,
+        maxWidth: '100%',
+        maxHeight: '100%',
+       
+      }}
+    >
+      <TextField style={{height: 100}} fullWidth label="Something Specific to video" id="fullWidth" />
+    </Box>
+  
+  */}
+          {/* <TextareaAutosize
+            maxRows={4}
+            aria-label="maximum height"
+            placeholder="Youtube Video Link"
+            value={videoLink}
+            onChange={(e) => setVideoLink(e.target.value)}
+            //   defaultValue="" style={{fontFamily: 'Montserrat', fontSize: 40, fontWeight: 'bold', margin: '3rem', color: "252B42"}}
+            style={{
+              width: 650,
+              height: 75,
+              fontFamily: "Montserrat",
+              color: "252B42",
+              fontSize: 20,
+              margin: "1.5rem",
+            }}
+          /> */}
+          <MultipleValueTextInput
+                  
+                    onItemAdded={(item, allItems) =>
+                      setSubTopic([...subTopic, item])
+                    }
+                    onItemDeleted={(item, allItems) =>
+                      setSubTopic((item) =>
+                        subTopic.filter((it, i) => item !== it)
+                      )
+                    }
+                    // label="Sub-Topic"
+                    // values={["default value"]}
+                    name="item-input"
+                    placeholder="Sub-Topic"
+                  />
         </Grid>
         <Grid item>
           {/* <Box
@@ -211,7 +286,7 @@ const AddVideoForm = () => {
             aria-label="maximum height"
             placeholder="Youtube Video Link"
             value={videoLink}
-            onChange={(e)=>setVideoLink(e.target.value)}
+            onChange={(e) => setVideoLink(e.target.value)}
             //   defaultValue="" style={{fontFamily: 'Montserrat', fontSize: 40, fontWeight: 'bold', margin: '3rem', color: "252B42"}}
             style={{
               width: 650,
@@ -225,7 +300,7 @@ const AddVideoForm = () => {
         </Grid>
         <Grid item>
           <Button
-            onClick = {handleClick}
+            onClick={handleClick}
             variant="contained"
             style={{
               background: "#FA5523",
