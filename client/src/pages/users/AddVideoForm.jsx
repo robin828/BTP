@@ -31,7 +31,7 @@ const AddVideoForm = () => {
     },
   ];
   console.log(subTopic);
-  const url = "https://class.chartr.in"
+  const url = "https://class.chartr.in/"
   // const url = "http://localhost:5000/";
 
   const handleClick = () => {
